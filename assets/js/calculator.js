@@ -18,6 +18,10 @@ const checkOps = /[+*\/-]/;
 for(let i = 0; i < numbers.length; i++){
     numbers[i].addEventListener("click", function(){
         checkNumber(this.textContent);
+        
+        if(isOverflown(screen)) {
+            updateFontSize(screen, 'reduce');
+        }
     });
 }
 
@@ -88,6 +92,7 @@ function checkNumber(val){
 
     if(equalStatus === true && inputArr.length === 1){
         inputArr[0] = val;
+        updateFontSize(screen, 'default');
         equalStatus = false;
     } else if(inputArr[last] === "0"){
         inputArr[last] = val;
@@ -116,4 +121,16 @@ function doArithmetic(val1, val2, operator, nextOperator){
 
 function updateScreen(){
     screen.textContent = inputArr.join(" ");
+}
+
+function isOverflown(element){
+    return element.scrollWidth > element.offsetWidth ? true : false;
+}
+
+function updateFontSize(element, type){
+    const currentSize = parseInt(window.getComputedStyle(element)['font-size'], 10);
+    const newSize = type === 'default' ? 30 : (currentSize - 5);
+
+    element.style.fontSize = `${newSize}px`;
+
 }
