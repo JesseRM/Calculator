@@ -15,71 +15,72 @@ const checkOps = /[+*\/-]/;
 
 
 //Add event listeners for numbers
-for(let i = 0; i < numbers.length; i++){
-    numbers[i].addEventListener("click", function(){
+for (let i = 0; i < numbers.length; i++) {
+    numbers[i].addEventListener("click", function () {
         checkNumber(this.textContent);
         
-        if(isOverflown(screen)) {
+        if (isOverflown(screen)) {
             updateFontSize(screen, 'reduce');
         }
     });
 }
 
 //Add event listeners for operators
-for(let i = 0; i < operators.length; i++){
-    operators[i].addEventListener("click", function(){
+for (let i = 0; i < operators.length; i++) {
+    operators[i].addEventListener("click", function () {
         checkOperator(this.textContent);
     });
 }
 
 //Add event listener for decimal point
-decimal.addEventListener("click", function(){
+decimal.addEventListener("click", function () {
     checkDecimal();
 });
 
-clearCE.addEventListener("click", function(){
-    if(inputArr.length === 3){
+clearCE.addEventListener("click", function () {
+    if (inputArr.length === 3) {
         inputArr[2] = "0";
         updateScreen();
-    } else if(inputArr.length === 1){
+    } else if (inputArr.length === 1) {
         inputArr[0] = "0";
         updateScreen();
     }
     console.log(inputArr);
 });
 
-clearAC.addEventListener("click", function(){
+clearAC.addEventListener("click", function () {
     inputArr.length = 0;
     inputArr.push("0");
     updateScreen();
 });
 
-equals.addEventListener("click", function(){
-    if(inputArr.length === 3){
+equals.addEventListener("click", function () {
+    if (inputArr.length === 3) {
         doArithmetic(inputArr[0], inputArr[2], inputArr[1]);
         equalStatus = true;
     }
 });
 
-function checkDecimal(){
+function checkDecimal () {
     let last = inputArr.length - 1;
 
-    if(inputArr[0] === undefined || checkOps.test(inputArr[last])){
+    if (inputArr[0] === undefined || checkOps.test(inputArr[last])) {
         inputArr.push("0.");
-    } else if(!checkDot.test(inputArr[last])){
+    } else if (!checkDot.test(inputArr[last])) {
         inputArr[last] += ".";
     }
     console.log(inputArr);
     updateScreen();
 }
-function checkOperator(op){
+
+function checkOperator(op) {
     let last = inputArr.length - 1;
 
-    if(inputArr.length === 1){
+    if (inputArr.length === 1) {
         inputArr.push(op);
-    } else if(inputArr.length === 2){
+    } else if (inputArr.length === 2) {
         inputArr[last] = op;
-    } else if(inputArr.length === 3){
+    } else if (inputArr.length === 3) {
         inputArr.push(op);
         doArithmetic(inputArr[0], inputArr[2], inputArr[1], inputArr[3]);
     }
@@ -87,25 +88,25 @@ function checkOperator(op){
     updateScreen();
 }
 
-function checkNumber(val){
+function checkNumber(val) {
     let last = inputArr.length - 1;
 
-    if(equalStatus === true && inputArr.length === 1){
+    if (equalStatus === true && inputArr.length === 1) {
         inputArr[0] = val;
         updateFontSize(screen, 'default');
         equalStatus = false;
-    } else if(inputArr[last] === "0"){
+    } else if (inputArr[last] === "0") {
         inputArr[last] = val;
-     } else if(checkDot.test(inputArr[last]) || checkNum.test(inputArr[last]) && inputArr[last] !== "0") {
+     } else if (checkDot.test(inputArr[last]) || checkNum.test(inputArr[last]) && inputArr[last] !== "0") {
         inputArr[last] += val;
-     } else{
+     } else {
         inputArr.push(val);
      }
     console.log(inputArr);
     updateScreen();
 }
 
-function doArithmetic(val1, val2, operator, nextOperator){
+function doArithmetic(val1, val2, operator, nextOperator) {
     switch(operator){
         case "+": total = parseFloat(val1) + parseFloat(val2); break;
         case "-": total = parseFloat(val1) - parseFloat(val2); break;
@@ -114,20 +115,22 @@ function doArithmetic(val1, val2, operator, nextOperator){
     }
     inputArr.length = 0; //Flush string
     inputArr.push(total.toString());
-    if(nextOperator){inputArr.push(nextOperator);}
+    if (nextOperator) {
+        inputArr.push(nextOperator);
+    }
     console.log(inputArr);
     updateScreen();
 }
 
-function updateScreen(){
+function updateScreen() {
     screen.textContent = inputArr.join(" ");
 }
 
-function isOverflown(element){
+function isOverflown(element) {
     return element.scrollWidth > element.offsetWidth ? true : false;
 }
 
-function updateFontSize(element, type){
+function updateFontSize(element, type) {
     const currentSize = parseInt(window.getComputedStyle(element)['font-size'], 10);
     const newSize = type === 'default' ? 30 : (currentSize - 5);
 
