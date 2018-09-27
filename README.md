@@ -9,9 +9,9 @@ The calculator currently only accepts mouse clicks for input; the user cannot us
 User can perform basic arithmetic operations by clicking on either of these buttons "+, -, *, /".
 
 ## Technologies
-HTML
-CSS
-JavaScript
+1. HTML
+2. CSS
+3. JavaScript
 
 ## Project Status
 This was a beginner project and the main functionalities have been complete. An aspect of the program that could cause problems is
