@@ -5,6 +5,8 @@ objectives was to ensure proper user input; for example restricting the user fro
 cause errors. Another important objective was to ensure text inside screen would adjust were the user to input a really long number.
 
 ## Usage
+[Live Demo](https://jesserm.github.io/Calculator/)
+
 The calculator currently only accepts mouse clicks for input; the user cannot use the keyboard for input.
 User can perform basic arithmetic operations by clicking on either of these buttons "+, -, *, /".
 
